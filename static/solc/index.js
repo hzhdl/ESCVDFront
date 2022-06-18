@@ -1,15 +1,18 @@
 self.onmessage = (e) => {
-  console.log(e.data)
-  importScripts('soljson-v0.5.15+commit.6a57276f.js');
+  let data =e.data
+  console.log(data)
+  importScripts(data[1]);
+  //'soljson-v0.5.15+commit.6a57276f.js'
   let soljson = Module;
-  console.log('worker soljson = ', soljson);
+
   importScripts('solc.bundle.js');
-  console.log("solc = ", solc);
+
   var input = {
     language: 'Solidity',
     sources: {
-      'test.sol': {
-        content: 'contract C { function f() public {  } } contract B  function f() public {  } }'
+      'test': {
+        content: data[2]
+        //'contract C { function f() public {  } } contract B  function f() public {  } }'
       }
     },
     settings: {

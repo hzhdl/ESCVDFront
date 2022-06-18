@@ -1,9 +1,14 @@
 <template>
-  <div>
-    <textarea ref="mycode" class="codesql" v-model="code" style="height:200px;width:600px;"></textarea>
-    <div>
-      <el-button type="" @click="test">dsfsd</el-button>
-    </div>
+  <div class="SCCOM">
+    <el-row>
+      <el-col :span="4"><div class="grid-content bg-purple">
+        <Sctool></Sctool>
+      </div></el-col>
+      <el-col :span="20"><div class="grid-content bg-purple-light">
+        <textarea ref="mycode" class="codesql" v-model="code" style="height:calc(100vh - 80px - 32px - 35px);width:600px;"></textarea>
+      </div></el-col>
+    </el-row>
+
   </div>
 </template>
 
@@ -14,18 +19,22 @@ require("codemirror/addon/selection/active-line");
 require("codemirror/mode/sql/sql");
 require("codemirror/addon/hint/show-hint");
 require("codemirror/addon/hint/sql-hint");
+import Sctool from "../components/sctool";
+import pubsub from "pubsub-js";
+
 export default {
   name: "complie",
+  components: {Sctool},
   data(){
     return {
       code:'',
-      version:'',
+
     }
   },
   methods:{
-    test () {
+    test (code,version) {
       let myw = new Worker('../../static/solc/index.js')
-      myw.postMessage(["start worker",123])
+      myw.postMessage(["start worker",version,code])
       myw.onmessage= (e,data)=>{
         console.log(e.data[1])
         myw.terminate();
@@ -59,12 +68,27 @@ export default {
     })
     //代码自动提示功能，记住使用cursorActivity事件不要使用change事件，这是一个坑，那样页面直接会卡死
     editor.on('cursorActivity', function () {
-      editor.showHint()
+      //editor.showHint()
+    })
+
+
+    pubsub.subscribe("compliecode",(msg,res)=>{
+      this.code=editor.getValue()
+      if(this.code===""){
+        //console.log(editor.getValue())
+        this.$message.error('请输入代码,不要为空');
+      }
+      else {
+        //console.log(this.$refs.mycode)
+        this.$store.state.code = this.code
+      }
     })
   }
 }
 </script>
 
 <style scoped>
+.codesql{
 
+}
 </style>

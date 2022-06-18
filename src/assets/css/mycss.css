@@ -1,0 +1,16 @@
+.CodeMirror{
+  height:calc(100vh - 80px - 32px - 35px);
+  width:100%;
+  border: 1px solid black;
+}
+.el-form-item__label{
+  font-size: 1.2em;
+  color: white;
+}
+.el-form-item__content{
+  text-align: center;
+}
+.el-form-item{
+  margin-bottom: 5px;
+}
+

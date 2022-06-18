@@ -12,6 +12,7 @@ import store from './store'
 import "codemirror/theme/ambiance.css";
 import "codemirror/lib/codemirror.css";
 import "codemirror/addon/hint/show-hint.css";
+import "./assets/css/mycss.css"
 
 
 

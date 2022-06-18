@@ -1,10 +1,10 @@
 <template>
   <div id="mytask-layout" class="theme-indigo">
-    <div  class="sidebar px-4 py-4 py-md-5 me-0">
+    <div  class="sidebar px-4 py-4 py-md-5 me-0 sidebar-mini">
       <Sidebar></Sidebar>
 
     </div>
-    <div id="content" class="main px-lg-4 px-md-4">
+    <div id="content" class=" content px-lg-4 px-md-4 main ">
       <Nav></Nav>
       <Main></Main>
     </div>
@@ -23,5 +23,7 @@ import Main from "./components/Main";
 </script>
 
 <style lang="less" scoped>
-
+.content{
+  padding-right: 5px !important;
+}
 </style>

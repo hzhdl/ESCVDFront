@@ -49,7 +49,7 @@
 export default {
   name: "Sidebar",
   created() {
-    console.log('sad4f35sda435f4s')
+    //console.log('sad4f35sda435f4s')
   }
 }
 </script>
