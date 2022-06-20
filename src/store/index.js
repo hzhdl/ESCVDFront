@@ -8,10 +8,13 @@ Vue.use(Vuex)
 //2.创建对象
 const store = new Vuex.Store({
   state:{
+    urlpre: 'http://172.16.0.62:8082/',
+
     selectversion: "",
     code:"",
     bytecode:"",
     abi:"",
+
 
   },
   mutations:{
