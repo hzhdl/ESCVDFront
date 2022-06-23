@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import center from "../page/center";
-import complie from "../page/complie";
 import detect from "../page/detect";
+import login from "../page/login";
+import All from "../components/All";
+import complie from "../page/complie";
 
 
 Vue.use(Router)
@@ -11,24 +13,39 @@ export default new Router({
   routes: [
     {
       path:"/",
-      name:"main",
-      component:center
+      redirect:'login'
     },
     {
-      path:"/center",
-      name:"main",
-      component:center
+      path:"/login",
+      name:"login",
+      component: login
     },
     {
-      path:"/complie",
-      name:"main",
-      component:complie
+      path:"/home",
+      component: All,
+      children:[
+        {
+          path:"/",
+          redirect:'center'
+        },
+        {
+          path:"center",
+          name:"center",
+          component:center
+        },
+        {
+          path:'compile',
+          name:'compile',
+          component: complie
+        },
+        {
+          path:"detect",
+          name:"detect",
+          component:detect
+        }
+      ]
     },
-    {
-      path:"/detect",
-      name:"main",
-      component:detect
-    }
+
 
   ]
 })

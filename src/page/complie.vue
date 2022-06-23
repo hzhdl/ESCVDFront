@@ -6,6 +6,10 @@
       </div></el-col>
       <el-col :span="20"><div class="grid-content bg-purple-light">
         <textarea ref="mycode" class="codesql" v-model="code" style="height:calc(100vh - 80px - 32px - 35px);width:600px;"></textarea>
+        <textarea class="result" disabled="">
+
+          {{log}}
+        </textarea>
       </div></el-col>
     </el-row>
 
@@ -28,6 +32,7 @@ export default {
   data(){
     return {
       code:'',
+      log:'',
 
     }
   },
@@ -75,13 +80,17 @@ export default {
     pubsub.subscribe("compliecode",(msg,res)=>{
       this.code=editor.getValue()
       if(this.code===""){
-        //console.log(editor.getValue())
+        console.log(editor.getValue())
         this.$message.error('请输入代码,不要为空');
       }
       else {
         //console.log(this.$refs.mycode)
         this.$store.state.code = this.code
       }
+    })
+    pubsub.subscribe("outlog",(msg,e)=>{
+      this.code=editor.getValue()
+      this.log+=e.data[1].errors[0].formattedMessage + '\n' +e.data[1].errors[0].message + "\n\n"
     })
   }
 }
@@ -90,5 +99,13 @@ export default {
 <style scoped>
 .codesql{
 
+}
+.result{
+  width:100%;
+  border: black solid 1px;
+  height: 150px;
+  background-color: white;
+  color: black;
+  overflow: auto;
 }
 </style>

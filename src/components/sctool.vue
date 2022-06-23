@@ -1,12 +1,13 @@
 <template>
-  <div class="sctool">
+  <el-card class="sctool">
     <el-form ref="form" label-width="">
       <el-form-item label="编译器版本">
         <el-select v-model="selectversion" placeholder="请选择编译器">
           <el-option v-for="(i,index) in version" :key="index" :label="i.name" :value="i.value"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="">
+      <el-form-item label="自动检测">
+        <el-switch v-model="insert"></el-switch>
         <el-button type="primary" @click="complie">编译</el-button>
       </el-form-item>
       <el-form-item label="">
@@ -18,7 +19,7 @@
 
       {{log}}
     </textarea>
-  </div>
+  </el-card>
 </template>
 
 <script>
@@ -27,6 +28,7 @@ export default {
   name: "sctool",
   data(){
     return {
+      insert:true,
       log:'',
       form:{},
       selectversion:"",
@@ -68,7 +70,7 @@ export default {
     },
     datawash(res){
       let ress=res.contracts.test
-      console.log(ress)
+      //console.log(ress)
       for (const ress1 in ress) {
         this.ABI=JSON.stringify(ress[ress1].abi)
         this.Bytecode=ress[ress1].evm.bytecode.object
@@ -92,10 +94,13 @@ export default {
           let myw = new Worker('../../static/solc/index.js')
           myw.postMessage(["start worker",this.$store.state.selectversion,this.$store.state.code])
           myw.onmessage= (e,data)=>{
-            console.log(e.data[1])
-            this.log+=e.data[1].errors[0].formattedMessage + '\n' +e.data[1].errors[0].message + "\n\n"
+
+            //this.log+=e.data[1].errors[0].formattedMessage + '\n' +e.data[1].errors[0].message + "\n\n"
             myw.terminate();
             this.datawash(e.data[1])
+            console.log(e.data[1])
+            this.log=this.Bytecode
+            pubsub.publish("outlog",e)
             console.log('onmessage结束')
           }
           setTimeout(()=>{
@@ -114,8 +119,7 @@ export default {
 
 <style scoped>
 .sctool{
-  height: calc(100vh - 80px - 32px - 35px);
-  background-color: #9a9b9d;
+
   margin-right: 5px;
   border-radius: 5px;
   padding-left: 5px;
@@ -123,7 +127,7 @@ export default {
 .result{
   width: calc(100% - 5px);
   border: black 3px solid;
-  height: calc(100vh - 80px - 32px - 35px - 180px);
+  height: calc(100vh - 80px - 32px - 35px - 223px);
   background-color: white;
   color: black;
   overflow: auto;

@@ -16,9 +16,9 @@
       <!--                        <li><a class="ms-link" href="project-dashboard.html"><span>Project Dashboard</span></a></li>-->
       <!--                    </ul>-->
       <!--                </li>-->
-      <li><router-link class="m-link" to="/center"><i class="iconfont icon-shujuguanli"></i><span>个人中心</span></router-link></li>
-      <li><router-link class="m-link" to="/complie"><i class="iconfont icon-jihuaxietong"></i><span>合约编译</span></router-link></li>
-      <li><router-link class="m-link" to="/detect"><i class="iconfont icon-mingxihuaxiang"></i><span>漏洞检测</span></router-link></li>
+      <li><router-link class="m-link" to="/home/center"><i class="iconfont icon-shujuguanli"></i><span>个人中心</span></router-link></li>
+      <li><router-link class="m-link" to="/home/compile"><i class="iconfont icon-jihuaxietong"></i><span>合约编译</span></router-link></li>
+      <li><router-link class="m-link" to="/home/detect"><i class="iconfont icon-mingxihuaxiang"></i><span>漏洞检测</span></router-link></li>
     </ul>
 
     <!-- Theme:Switch Theme -->

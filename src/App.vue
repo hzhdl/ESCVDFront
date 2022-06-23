@@ -1,24 +1,14 @@
 <template>
-  <div id="mytask-layout" class="theme-indigo">
-    <div  class="sidebar px-4 py-4 py-md-5 me-0 sidebar-mini">
-      <Sidebar></Sidebar>
-
-    </div>
-    <div id="content" class=" content px-lg-4 px-md-4 main ">
-      <Nav></Nav>
-      <Main></Main>
-    </div>
+  <div>
+    <router-view ></router-view>
   </div>
 </template>
 
 <script>
 export default {
   name: 'App',
-  components: {Main, Sidebar, Nav}
+
 }
-import Nav from "./components/Nav";
-import Sidebar from "./components/Sidebar";
-import Main from "./components/Main";
 
 </script>
 

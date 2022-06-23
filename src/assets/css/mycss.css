@@ -1,5 +1,5 @@
 .CodeMirror{
-  height:calc(100vh - 80px - 32px - 35px);
+  height:calc(100vh - 80px - 32px - 35px - 150px);
   width:100%;
   border: 1px solid black;
 }
@@ -13,4 +13,9 @@
 .el-form-item{
   margin-bottom: 5px;
 }
-
+.el-form-item__label{
+  color: #909399;
+}
+.el-popover{
+  max-width: 500px;
+}

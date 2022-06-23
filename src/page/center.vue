@@ -21,16 +21,24 @@
 
 <script>
 import * as echarts from 'echarts'
-import {getchart1, getchart2} from "../axios/API";
+import {getchart1, getchart2, getchart3, getchart4} from "../axios/API";
 export default {
   name: "center",
   data(){
     return{
-
+      vulntype:["SWC-107","SWC-114","SWC-106","SWC-116","SWC-112","SWC-115"],
     }
   },
   methods:{
-
+    dataw(data) {
+      console.log(data)
+      let result=[];
+      for (let i = 0; i < data.length; i++) {
+        result.push({name:this.vulntype[i],value:data[i]})
+      }
+      console.log(result)
+      return result;
+    }
   },
   created() {
 
@@ -44,7 +52,7 @@ export default {
     let chart3=document.getElementById("chart3")
     let chart4=document.getElementById("chart4")
     //['重入攻击', '交易顺序依赖', ' 未保护的SELFDESTRUCT', '时间戳依赖', '不安全的DelegatCall', 'Tx.origin授权漏洞']
-    getchart1(this.$store.state.urlpre,1,1).then((res)=>{
+    getchart1(this.$store.state.urlpre,this.$store.state.userid,1).then((res)=>{
       var myChart = echarts.init(chart3);
       let option={
         title: {
@@ -75,7 +83,7 @@ export default {
       }
       myChart.setOption(option);
     })
-    getchart2(this.$store.state.urlpre, 1, 1).then((res)=>{
+    getchart2(this.$store.state.urlpre, this.$store.state.userid, 1).then((res)=>{
       var myChart = echarts.init(chart4);
       let option={
         title: {
@@ -133,8 +141,115 @@ export default {
       }
       myChart.setOption(option);
     })
+    getchart3(this.$store.state.urlpre, this.$store.state.userid, 1).then((res)=>{
+      var myChart = echarts.init(chart1);
+      let option={
+        title: {
+          text:"合约--漏洞",
+          left:'center'
+        },
+        color:['#ee6666','#5470c6','#90cc75','#fac858'],
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross',
+            label: {
+              backgroundColor: '#85d9e8'
+            }
+          }
+        },
+        // legend: {
+        //   data: ['vulnerability']
+        // },
+        toolbox: {
+          feature: {
+            saveAsImage: {}
+          }
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis: [
+          {
+            type: 'category',
+            boundaryGap: false,
+            data: res.data.xtext
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value'
+          }
+        ],
+        series: [
+          {
+            name: 'vulnerability',
+            type: 'line',
+            stack: 'Total',
+            areaStyle: {},
+            emphasis: {
+              focus: 'series'
+            },
+            data: res.data.data
+          }
+        ]
+      }
+      myChart.setOption(option);
+    })
+    getchart4(this.$store.state.urlpre, this.$store.state.userid, 1).then((res)=>{
+      console.log(res)
+      var myChart = echarts.init(chart2);
+      let option={
+        title: {
+          text:"漏洞类型",
+          left:'center'
+        },
+        color:['#a4e0f7','#5470c6','#90cc75','#fac858',
+          '#ee6666','#fc8452'],
+        tooltip: {
+          trigger: 'item'
+        },
+        legend: {
+          top: '5%',
+          left: 'center'
+        },
+        series: [
+          {
+            name: 'Access From',
+            type: 'pie',
+            radius: ['40%', '70%'],
+            avoidLabelOverlap: false,
+            itemStyle: {
+              borderRadius: 10,
+              borderColor: '#fff',
+              borderWidth: 2
+            },
+            label: {
+              show: false,
+              position: 'center'
+            },
+            emphasis: {
+              label: {
+                show: true,
+                fontSize: '40',
+                fontWeight: 'bold'
+              }
+            },
+            labelLine: {
+              show: false
+            },
+            data: this.dataw(res.data),
+          }
+        ]
+      }
+      myChart.setOption(option);
+    })
 
-  }
+  },
+
 }
 </script>
 
@@ -144,6 +259,6 @@ export default {
   height: calc((100vh - 80px - 32px - 45px) / 2);
   margin: 5px;
   border-radius: 10px;
-  box-shadow: 0 0 5px 0px black;
+  box-shadow: 0 0 10px -5px black;
 }
 </style>

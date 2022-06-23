@@ -9,6 +9,8 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state:{
     urlpre: 'http://172.16.0.62:8082/',
+    userid: '',
+    username:'',
 
     selectversion: "",
     code:"",
